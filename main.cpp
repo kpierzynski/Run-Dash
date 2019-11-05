@@ -7,7 +7,11 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(600, 600), "Run&Dash");	//Tworzenie okna glownego GUI o rozmiarach 600x600 i danym tytule
+	int width = 1024;
+	int height = 768;
+	std::string title = "Run&Dash";
+
+	sf::RenderWindow window(sf::VideoMode(width, height), title);	//Tworzenie okna glownego GUI
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	Player player = Player(10, 20);	//Stworzenie obiektu gracza na pozycji (10,20)

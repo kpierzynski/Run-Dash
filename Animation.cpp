@@ -6,12 +6,12 @@
 
 Animation::Animation(sf::RectangleShape * shape) {
 	this->shape = shape;	//Zapamietanie elementu docelowego do animacji
-	this->lenght = 0;	//Dlugosc animacji
+	this->length = 0;	//Dlugosc animacji
 	this->progress = 0;	//Obecny stan animacji
 }
 
 void Animation::addFrame( TFrame frame ) {
-	this->lenght += frame.duration;
+	this->length += frame.duration;
 	this->frames.push_back( frame );	//Zapisanie klatki animacji do bufora
 }
 
