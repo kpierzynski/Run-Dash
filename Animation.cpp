@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <iterator>
 
 #include "Animation.hpp"
 
@@ -13,6 +14,14 @@ Animation::Animation(sf::RectangleShape * shape) {
 void Animation::addFrame( TFrame frame ) {
 	this->lenght += frame.duration;
 	this->frames.push_back( frame );	//Zapisanie klatki animacji do bufora
+}
+
+void Animation::addFrames( TFrame * frames, int length ) {
+
+	for( int i; i < length; i++ ) {
+		this->addFrame(frames[i]);
+	}
+
 }
 
 void Animation::update( double elapsedTime, bool isInverted ) {

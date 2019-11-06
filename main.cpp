@@ -7,6 +7,7 @@
 
 #define HEIGHT 800
 #define WIDTH 800
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Run&Dash");	//Tworzenie okna glownego GUI o rozmiarach 600x600 i danym tytule
@@ -32,17 +33,8 @@ int main()
 		{sf::IntRect(6*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
 	};
 	
-	animationIdle.addFrame( framesIdle[0] );
-	animationIdle.addFrame( framesIdle[1] );
-	animationIdle.addFrame( framesIdle[2] );
-	animationIdle.addFrame( framesIdle[3] );
-
-	animationRunning.addFrame(framesRunning[0]);
-	animationRunning.addFrame(framesRunning[1]);
-	animationRunning.addFrame(framesRunning[2]);
-	animationRunning.addFrame(framesRunning[3]);
-	animationRunning.addFrame(framesRunning[4]);
-	animationRunning.addFrame(framesRunning[5]);
+	animationIdle.addFrames(framesIdle, 4);
+	animationRunning.addFrames(framesRunning, 6);	
 	//Uzupelnienie animacji klatkami i ich czasami
 
 	sf::Clock clock;	//Zegar do obslugi animacji
