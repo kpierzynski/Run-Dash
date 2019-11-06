@@ -11,7 +11,7 @@ typedef struct {
 class Animation {
 	private:
 		double progress;
-		double lenght;
+		double length;
 
 		sf::RectangleShape * shape;
 		std::vector<TFrame> frames;

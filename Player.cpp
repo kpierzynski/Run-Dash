@@ -14,7 +14,7 @@ Player::Player( float x, float y ) {
 	this->spriteHeight = 37;
 
 	this->shape = sf::RectangleShape( sf::Vector2f(this->width, this->height) );	//Tworzenie prostokata gracza
-	this->shape.setTextureRect( sf::IntRect(0,0,-this->spriteWidth,this->spriteHeight) );	//Nalozenie odpowiedniego sprita z textury
+	this->shape.setTextureRect( sf::IntRect(0,0,this->spriteWidth,this->spriteHeight) );	//Nalozenie odpowiedniego sprita z textury
 	this->shape.setTexture( &this->texture );	//Przypisanie textury do prostokata
 
 	this->x = x;
@@ -26,7 +26,7 @@ Player::Player( float x, float y ) {
 	this->isAttacking = false;
 	this->isInverted = false;
 
-	this->shape.setOutlineColor(sf::Color(0,255,0) );
+	this->shape.setOutlineColor( sf::Color(0,255,0) );
 	this->shape.setOutlineThickness(5);
 	this->shape.setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
 

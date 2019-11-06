@@ -5,12 +5,14 @@
 #include "Player.hpp"
 #include "Animation.hpp"
 
-#define HEIGHT 800
-#define WIDTH 800
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 768
+#define GAME_TITLE "Run&Dash"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Run&Dash");	//Tworzenie okna glownego GUI o rozmiarach 600x600 i danym tytule
+	//Tworzenie okna glownego GUI
+	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	Player player = Player(10, 20);	//Stworzenie obiektu gracza na pozycji (10,20)
@@ -22,7 +24,7 @@ int main()
 		{sf::IntRect(1*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
 		{sf::IntRect(2*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
 		{sf::IntRect(3*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.2f}
-	 };
+	};
 
 	TFrame framesRunning[6] = {	
 		{sf::IntRect(1*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
@@ -35,6 +37,7 @@ int main()
 	
 	animationIdle.addFrames(framesIdle, 4);
 	animationRunning.addFrames(framesRunning, 6);	
+	
 	//Uzupelnienie animacji klatkami i ich czasami
 
 	sf::Clock clock;	//Zegar do obslugi animacji
