@@ -19,7 +19,7 @@ class Animation {
 	public:
 		Animation(sf::RectangleShape * shape);
 		void addFrame( TFrame frame );
-		void update( double elapsedTime );
+		void update( double elapsedTime, bool isInverted );
 };
 
 #endif
