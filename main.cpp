@@ -4,10 +4,11 @@
 
 #include "Player.hpp"
 #include "Animation.hpp"
+#include "Level.hpp"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(600, 600), "Run&Dash");	//Tworzenie okna glownego GUI o rozmiarach 600x600 i danym tytule
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Run&Dash");	//Tworzenie okna glownego GUI
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	Player player = Player(10, 20);	//Stworzenie obiektu gracza na pozycji (10,20)
@@ -27,6 +28,12 @@ int main()
 	//Uzupelnienie animacji klatkami i ich czasami
 
 	sf::Clock clock;	//Zegar do obslugi animacji
+	sf::Texture bgTexture; //Tekstura tla
+
+	if(!bgTexture.loadFromFile("Assets/background.jpg"))
+		return -1;
+
+	Level level = Level(&bgTexture);
 
 	while (window.isOpen())	//Petla glowna programu
 	{
@@ -43,6 +50,7 @@ int main()
 			animationIdle.update(clock.restart().asSeconds()); //Aktualizacja stanow obiektow w ramce
 		player.update();
 
+		window.draw(level.background); //Rysowanie tla
 		window.draw( player.shape ); //Rysowanie gracza
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}
