@@ -10,10 +10,12 @@ class Player {
 		float x;
 		float y;
 
-		int width = 50*4;
-		int height = 37*4;
+		int width;
+		int height;
 	public:
 		sf::RectangleShape shape;
+
+		int scale;
 
 		int spriteWidth;
 		int spriteHeight;
@@ -27,6 +29,7 @@ class Player {
 
 		Player( float x, float y );
 		void update();
+		void setPosition( float x, float y );
 };
 
 #endif

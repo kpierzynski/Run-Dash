@@ -15,7 +15,9 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
-	Player player = Player(10, 20);	//Stworzenie obiektu gracza na pozycji (10,20)
+	Player player = Player(0, 0);	//Stworzenie obiektu gracza na pozycji (10,20)
+	player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
+	
 	Animation animationIdle = Animation(&player.shape);	//Dodanie animacji do gracza
 	Animation animationRunning = Animation(&player.shape);
 

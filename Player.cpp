@@ -10,9 +10,13 @@ Player::Player( float x, float y ) {
 		std::cout << "ERROR: Player.cpp, Player::Player(...): loading texture " << std::endl;
 	}	//Wczytanie pliku z wszystkimi pojendynczymi obrazkami do zmiennej texture
 
+	this->scale = 4;
+
 	this->spriteWidth = 50;
 	this->spriteHeight = 37;
 
+	this->width = this->spriteWidth * this->scale;
+	this->height = this->spriteHeight * this->scale;
 	this->shape = sf::RectangleShape( sf::Vector2f(this->width, this->height) );	//Tworzenie prostokata gracza
 	this->shape.setTextureRect( sf::IntRect(0,0,this->spriteWidth,this->spriteHeight) );	//Nalozenie odpowiedniego sprita z textury
 	this->shape.setTexture( &this->texture );	//Przypisanie textury do prostokata
@@ -26,10 +30,13 @@ Player::Player( float x, float y ) {
 	this->isAttacking = false;
 	this->isInverted = false;
 
-	this->shape.setOutlineColor( sf::Color(0,255,0) );
-	this->shape.setOutlineThickness(5);
 	this->shape.setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
 
+}
+
+void Player::setPosition( float x, float y ) {
+	this->x = x;
+	this->y = y;
 }
 
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
