@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <iterator>
 
 #include "Animation.hpp"
 
@@ -15,7 +16,15 @@ void Animation::addFrame( TFrame frame ) {
 	this->frames.push_back( frame );	//Zapisanie klatki animacji do bufora
 }
 
-void Animation::update( double elapsedTime ) {
+void Animation::addFrames( TFrame * frames, int length ) {
+
+	for( int i = 0; i < length; i++ ) {
+		this->addFrame(frames[i]);
+	}
+
+}
+
+void Animation::update( double elapsedTime, bool isInverted ) {
 
 	this->progress += elapsedTime;	//Dodanie do obecnego stanu animacji czasu jaki uplynal od ostatniej klatki
 	double time = this->progress;	//Zmienna pomocnicza
@@ -24,7 +33,12 @@ void Animation::update( double elapsedTime ) {
 		time -= this->frames[i].duration;
 
 		if( time <= 0 ) { //Jesli time jest <= 0 , to znaczy ze indeks i wskazuje na klatke animacji, ktora powinna byc wyswietlona
-			this->shape->setTextureRect(frames[i].pos);
+			TFrame fr = frames[i];
+			if( isInverted ) {
+				fr.pos.left += fr.pos.width;
+			       	fr.pos.width = -fr.pos.width;
+			}
+			this->shape->setTextureRect(fr.pos);
 			break;
 		}
 
