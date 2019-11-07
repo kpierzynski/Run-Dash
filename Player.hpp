@@ -12,6 +12,15 @@ class Player {
 
 		int width;
 		int height;
+
+		float velocityX = 0;
+		float velocityY = 0;
+
+		float accelerationX = 0;
+		float accelerationY = 0;
+
+		float gravity = 2;
+
 	public:
 		sf::RectangleShape shape;
 
@@ -30,6 +39,7 @@ class Player {
 		Player( float x, float y );
 		void update();
 		void setPosition( float x, float y );
+		void jump();
 };
 
 #endif

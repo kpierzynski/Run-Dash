@@ -31,7 +31,6 @@ Player::Player( float x, float y ) {
 	this->isInverted = false;
 
 	this->shape.setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
-
 }
 
 void Player::setPosition( float x, float y ) {
@@ -39,15 +38,20 @@ void Player::setPosition( float x, float y ) {
 	this->y = y;
 }
 
+void Player::jump() {
+	
+	velocityY = -20;
+}
+
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 	if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) { 
-		this->x -= 2; 
+		this->x -= 8; 
 		this->isRunning = true;
 		this->isIdling = false;
 		this->isInverted = true;
 	}
 	else if( sf::Keyboard::isKeyPressed(sf::Keyboard::D) ) { 
-		this->x += 2; 
+		this->x += 8; 
 		this->isRunning = true;
 		this->isIdling = false;
 		this->isInverted = false;
@@ -56,6 +60,16 @@ void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 		this->isIdling = true;
 		this->isRunning = false;
 	}
+
+	if( this->y < 500 ) velocityY += gravity;
+	else this->y = 500;
+
+	this->velocityX += this->accelerationX;
+	this->velocityY += this->accelerationY;
+
+	this->x += this->velocityX;
+	this->y += this->velocityY;
+
 
 	this->shape.setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
 

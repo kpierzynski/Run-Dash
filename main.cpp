@@ -16,7 +16,7 @@ int main()
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	Player player = Player(0, 0);	//Stworzenie obiektu gracza na pozycji (10,20)
-	player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
+	//player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
 	
 	Animation animationIdle = Animation(&player.shape);	//Dodanie animacji do gracza
 	Animation animationRunning = Animation(&player.shape);
@@ -51,6 +51,9 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if( event.type == sf::Event::KeyPressed) {
+				if( event.key.code == sf::Keyboard::Space ) player.jump(); 
+			}
 		}
 
 		window.clear(); //Czyszczenie ramki
