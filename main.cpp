@@ -18,8 +18,9 @@ int main()
 	Player player = Player(0, 0);	//Stworzenie obiektu gracza na pozycji (10,20)
 	//player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
 	
-	Animation animationIdle = Animation(&player.shape);	//Dodanie animacji do gracza
-	Animation animationRunning = Animation(&player.shape);
+	Animation animationIdle = Animation(&player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
+	Animation animationRunning = Animation(&player.shape, PLAY_MODE::LOOP);
+	Animation animationJumping = Animation(&player.shape, PLAY_MODE::ONCE);
 
 	TFrame framesIdle[4] = {
 		{sf::IntRect(0*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
@@ -36,14 +37,25 @@ int main()
 		{sf::IntRect(5*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
 		{sf::IntRect(6*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
 	};
+
+	TFrame framesJumping[4] = {
+		{sf::IntRect(0*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(15.0f/100)},
+		{sf::IntRect(1*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(20.0f/100)},
+		{sf::IntRect(2*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(30.0f/100)},
+		{sf::IntRect(3*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(35.0f/100)},
+	};
 	
 	animationIdle.addFrames(framesIdle, 4);
 	animationRunning.addFrames(framesRunning, 6);	
-	
+	animationJumping.addFrames(framesJumping, 4);
 	//Uzupelnienie animacji klatkami i ich czasami
 
-	sf::Clock clock;	//Zegar do obslugi animacji
+	animationIdle.play();
+	animationRunning.play();
+	animationJumping.play();
 
+	sf::Clock clock;	//Zegar do obslugi animacji
+	
 	while (window.isOpen())	//Petla glowna programu
 	{
 		sf::Event event; //Polling eventow
@@ -52,19 +64,25 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if( event.type == sf::Event::KeyPressed) {
-				if( event.key.code == sf::Keyboard::Space ) player.jump(); 
+				if( event.key.code == sf::Keyboard::Space ) {
+					player.jump(); 
+					animationJumping.play();				
+				}
 			}
 		}
 
 		window.clear(); //Czyszczenie ramki
 
-		sf::Time elapsed = clock.restart();
-
+		float elapsed = clock.restart().asSeconds();
+		
 		if( player.isIdling ) {
-			animationIdle.update(elapsed.asSeconds(), player.isInverted); //Aktualizacja stanow obiektow w ramce
+			animationIdle.update(elapsed, player.isInverted); //Aktualizacja stanow obiektow w ramce
 		}
 		if( player.isRunning ) {
-			animationRunning.update(elapsed.asSeconds(), player.isInverted);
+			animationRunning.update(elapsed, player.isInverted);
+		}
+		if( player.isJumping ) {
+			animationJumping.update(elapsed, player.isInverted);
 		}
 		player.update();
 

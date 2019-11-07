@@ -29,6 +29,7 @@ class Player {
 		int spriteWidth;
 		int spriteHeight;
 
+		bool isGrounded;
 		bool isInverted;
 
 		bool isIdling;

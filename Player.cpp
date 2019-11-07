@@ -24,11 +24,13 @@ Player::Player( float x, float y ) {
 	this->x = x;
 	this->y = y;	//Ustawienie prostokata gracza na pozycji (x,y)
 
+	this->isInverted = false;
+	this->isGrounded = false;
+
 	this->isIdling = true;
 	this->isRunning = false;
 	this->isJumping = false;
 	this->isAttacking = false;
-	this->isInverted = false;
 
 	this->shape.setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
 }
@@ -40,7 +42,10 @@ void Player::setPosition( float x, float y ) {
 
 void Player::jump() {
 	
-	velocityY = -20;
+	if( this->isGrounded ) {
+		this->isJumping = true;
+		this->velocityY = -20;
+	}
 }
 
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
@@ -61,15 +66,20 @@ void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 		this->isRunning = false;
 	}
 
-	if( this->y < 500 ) velocityY += gravity;
-	else this->y = 500;
+
+	if( this->y < 500 ) {
+		velocityY += gravity;
+		this->isGrounded = false;
+	} else {
+		this->y = 500;
+		this->isGrounded = true;
+	}
 
 	this->velocityX += this->accelerationX;
 	this->velocityY += this->accelerationY;
 
 	this->x += this->velocityX;
 	this->y += this->velocityY;
-
 
 	this->shape.setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
 

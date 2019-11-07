@@ -5,10 +5,14 @@
 
 #include "Animation.hpp"
 
-Animation::Animation(sf::RectangleShape * shape) {
+Animation::Animation(sf::RectangleShape * shape, PLAY_MODE mode) {
 	this->shape = shape;	//Zapamietanie elementu docelowego do animacji
 	this->length = 0;	//Dlugosc animacji
 	this->progress = 0;	//Obecny stan animacji
+
+	this->mode = mode;
+
+	this->isPlaying = false;
 }
 
 void Animation::addFrame( TFrame frame ) {
@@ -24,7 +28,16 @@ void Animation::addFrames( TFrame * frames, int length ) {
 
 }
 
+void Animation::play() {
+	this->isPlaying = true;
+}
+
+void Animation::stop() {
+	this->isPlaying = false;
+}
+
 void Animation::update( double elapsedTime, bool isInverted ) {
+	if( this->isPlaying != true ) return;
 
 	this->progress += elapsedTime;	//Dodanie do obecnego stanu animacji czasu jaki uplynal od ostatniej klatki
 	double time = this->progress;	//Zmienna pomocnicza
@@ -42,9 +55,10 @@ void Animation::update( double elapsedTime, bool isInverted ) {
 			break;
 		}
 
-		if( i+1 == this->frames.size() ) this->progress = 0; //Jesli trafilismy na ostatnia klatke, cofamy animacje do poczatku => LOOP animacji
-		//Nie wszystkie animacje sa zapetlone: TODO parametryzacja trybu animacji: LOOP, ONCE
 
-
+		if( i+1 == this->frames.size() ) {
+			this->progress = 0; //Jesli trafilismy na ostatnia klatke, cofamy animacje do poczatku => LOOP animacji
+			if( this->mode != PLAY_MODE::LOOP ) this->isPlaying = false; 
+		}
 	}
 }
