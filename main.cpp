@@ -6,9 +6,14 @@
 #include "Animation.hpp"
 #include "Level.hpp"
 
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
+#define GAME_TITLE "Run&Dash"
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Run&Dash");	//Tworzenie okna glownego GUI
+	//Tworzenie okna glownego GUI
+	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	Player player = Player(10, 20);	//Stworzenie obiektu gracza na pozycji (10,20)
