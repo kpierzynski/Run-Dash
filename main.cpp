@@ -39,10 +39,10 @@ int main()
 	};
 
 	TFrame framesJumping[4] = {
-		{sf::IntRect(0*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(15.0f/100)},
-		{sf::IntRect(1*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(20.0f/100)},
-		{sf::IntRect(2*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(30.0f/100)},
-		{sf::IntRect(3*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/3)*(35.0f/100)},
+		{sf::IntRect(0*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(5.0f/100)},
+		{sf::IntRect(1*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(18.0f/100)},
+		{sf::IntRect(2*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(27.0f/100)},
+		{sf::IntRect(3*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(50.0f/100)},
 	};
 	
 	animationIdle.addFrames(framesIdle, 4);

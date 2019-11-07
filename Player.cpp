@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <cmath>
 
 #include "Player.hpp"
 
@@ -44,11 +45,12 @@ void Player::jump() {
 	
 	if( this->isGrounded ) {
 		this->isJumping = true;
-		this->velocityY = -20;
+		this->velocityY = -30;
 	}
 }
 
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
+
 	if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) { 
 		this->x -= 8; 
 		this->isRunning = true;
@@ -68,18 +70,15 @@ void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 
 
 	if( this->y < 500 ) {
-		velocityY += gravity;
-		this->isGrounded = false;
-	} else {
-		this->y = 500;
-		this->isGrounded = true;
-	}
+                this->velocityY += this->gravity;
+                this->isGrounded = false;
+        } else {
+                this->y = 500;
+                this->isGrounded = true;
+        }
 
-	this->velocityX += this->accelerationX;
-	this->velocityY += this->accelerationY;
-
-	this->x += this->velocityX;
-	this->y += this->velocityY;
+	this->x += this->velocityX*this->velocityX * ((this->velocityX > 0)?1:-1)/30;
+	this->y += this->velocityY*this->velocityY * ((this->velocityY > 0)?1:-1)/30;
 
 	this->shape.setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
 
