@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 #include "Animation.hpp"
-#include "Level.hpp"
+#include "Background.hpp"
 
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
@@ -38,7 +38,7 @@ int main()
 	if(!bgTexture.loadFromFile("Assets/background.jpg"))
 		return -1;
 
-	Level level = Level(&bgTexture);
+	Background background = Background(&bgTexture);
 
 	while (window.isOpen())	//Petla glowna programu
 	{
@@ -55,7 +55,7 @@ int main()
 			animationIdle.update(clock.restart().asSeconds()); //Aktualizacja stanow obiektow w ramce
 		player.update();
 
-		window.draw(level.background); //Rysowanie tla
+		window.draw(background.image); //Rysowanie tla
 		window.draw( player.shape ); //Rysowanie gracza
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}

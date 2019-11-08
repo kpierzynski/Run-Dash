@@ -3,10 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
-class Level {
+class Background {
 	public:
-		Level(sf::Texture* bgTexture);
-		sf::Sprite background;	
+		Background(sf::Texture* bgTexture);
+		sf::Sprite image;	
 };
 
 
