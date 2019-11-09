@@ -3,10 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <stdint.h>
-
-enum State { idle, run, attact, jump };
-
 class Player {
 	private:
 		sf::Texture texture;
@@ -14,18 +10,26 @@ class Player {
 		float x;
 		float y;
 
-		uint16_t spriteWidth = 50;
-		uint16_t spriteHeight = 37;
-
-		uint16_t width = spriteWidth*4;
-		uint16_t height = spriteHeight*4;
+		int width;
+		int height;
 	public:
 		sf::RectangleShape shape;
 
-		State state;
+		int scale;
+
+		int spriteWidth;
+		int spriteHeight;
+
+		bool isInverted;
+
+		bool isIdling;
+		bool isRunning;
+		bool isJumping;
+		bool isAttacking;
 
 		Player( float x, float y );
 		void update();
+		void setPosition( float x, float y );
 };
 
 #endif
