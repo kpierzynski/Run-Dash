@@ -22,12 +22,12 @@ int main()
 	
 	Platform platform = Platform(50, 500, 50, 5, 4);
 
-	Physics physicsPlatform = Physics( &platform, 2 );
-	physicsPlatform.applyGravity();
+	Physics physicsPlayer = Physics( &player, 60 );
+	physicsPlayer.applyGravity();
 
-	Animation animationIdle = Animation(&player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
-	Animation animationRunning = Animation(&player.shape, PLAY_MODE::LOOP);
-	Animation animationJumping = Animation(&player.shape, PLAY_MODE::ONCE);
+	Animation animationIdle = Animation(player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
+	Animation animationRunning = Animation(player.shape, PLAY_MODE::LOOP);
+	Animation animationJumping = Animation(player.shape, PLAY_MODE::ONCE);
 
 	TFrame framesIdle[4] = {
 		{sf::IntRect(0*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
@@ -72,12 +72,8 @@ int main()
 				window.close();
 			if( event.type == sf::Event::KeyPressed) {
 				if( event.key.code == sf::Keyboard::Space ) {
-					player.jump(); 
 					animationJumping.play();				
-					physicsPlatform.addVelocity( sf::Vector2f(0, -20) );
-				}
-				if( event.key.code == sf::Keyboard::V ) {
-					physicsPlatform.setVelocity(sf::Vector2f(0,-20) );
+					physicsPlayer.setVelocity( sf::Vector2f(0, -6) );
 				}
 			}
 		}
@@ -95,14 +91,14 @@ int main()
 		if( player.isJumping ) {
 			animationJumping.update(elapsed, player.isInverted);
 		}
-		player.update();
 
+		player.update();
 		platform.update();
-		physicsPlatform.update(elapsed);
+
+		physicsPlayer.update(elapsed);
 
 		window.draw( platform );
-
-		window.draw( player.shape ); //Rysowanie gracza
+		window.draw( player ); //Rysowanie gracza
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}
 

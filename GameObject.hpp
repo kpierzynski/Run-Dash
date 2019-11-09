@@ -7,12 +7,15 @@ class GameObject : public sf::Drawable {
 	
 	protected:
 		float x,y;
-		int width, height;
-		int spriteWidth, spriteHeight;
-		int scale;
-		sf::Shape * shape;
 	
 	public:
+
+		sf::Shape * shape;
+		
+		int spriteWidth, spriteHeight;
+		int scale;
+		int width, height;
+
 		virtual void update() = 0;
 
 		void setPosition( float x, float y );

@@ -15,7 +15,7 @@ class Animation {
 		double progress;
 		double length;
 
-		sf::RectangleShape * shape;
+		sf::Shape * shape;
 		std::vector<TFrame> frames;
 
 	public:
@@ -23,7 +23,7 @@ class Animation {
 
 		bool isPlaying;
 
-		Animation(sf::RectangleShape * shape, PLAY_MODE mode);
+		Animation(sf::Shape * shape, PLAY_MODE mode);
 		void addFrame( TFrame frame );
 		void addFrames( TFrame * frames, int length );
 		void update( sf::Time elapsedTime, bool isInverted );

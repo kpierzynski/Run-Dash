@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "Player.hpp"
+#include "GameObject.hpp"
 
 Player::Player( float x, float y ) {
 
@@ -18,9 +19,9 @@ Player::Player( float x, float y ) {
 
 	this->width = this->spriteWidth * this->scale;
 	this->height = this->spriteHeight * this->scale;
-	this->shape = sf::RectangleShape( sf::Vector2f(this->width, this->height) );	//Tworzenie prostokata gracza
-	this->shape.setTextureRect( sf::IntRect(0,0,this->spriteWidth,this->spriteHeight) );	//Nalozenie odpowiedniego sprita z textury
-	this->shape.setTexture( &this->texture );	//Przypisanie textury do prostokata
+	this->shape = new sf::RectangleShape( sf::Vector2f(this->width, this->height) );	//Tworzenie prostokata gracza
+	this->shape->setTextureRect( sf::IntRect(0,0,this->spriteWidth,this->spriteHeight) );	//Nalozenie odpowiedniego sprita z textury
+	this->shape->setTexture( &this->texture );	//Przypisanie textury do prostokata
 
 	this->x = x;
 	this->y = y;	//Ustawienie prostokata gracza na pozycji (x,y)
@@ -33,20 +34,12 @@ Player::Player( float x, float y ) {
 	this->isJumping = false;
 	this->isAttacking = false;
 
-	this->shape.setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
+	this->shape->setPosition( this->x, this->y ); //Przypisanie (x,y) do prostokatu
 }
 
 void Player::setPosition( float x, float y ) {
 	this->x = x;
 	this->y = y;
-}
-
-void Player::jump() {
-	
-	if( this->isGrounded ) {
-		this->isJumping = true;
-		this->velocityY = -30;
-	}
 }
 
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
@@ -68,18 +61,6 @@ void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 		this->isRunning = false;
 	}
 
-
-	if( this->y < 500 ) {
-                this->velocityY += this->gravity;
-                this->isGrounded = false;
-        } else {
-                this->y = 500;
-                this->isGrounded = true;
-        }
-
-	this->x += this->velocityX*this->velocityX * ((this->velocityX > 0)?1:-1)/30;
-	this->y += this->velocityY*this->velocityY * ((this->velocityY > 0)?1:-1)/30;
-
-	this->shape.setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
+	this->shape->setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
 
 }

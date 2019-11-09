@@ -5,7 +5,7 @@
 
 #include "Animation.hpp"
 
-Animation::Animation(sf::RectangleShape * shape, PLAY_MODE mode) {
+Animation::Animation(sf::Shape * shape, PLAY_MODE mode) {
 	this->shape = shape;	//Zapamietanie elementu docelowego do animacji
 	this->length = 0;	//Dlugosc animacji
 	this->progress = 0;	//Obecny stan animacji

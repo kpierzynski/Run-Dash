@@ -26,7 +26,7 @@ void Physics::update(sf::Time elapsed) {
 
 	this->velocity += this->acceleration*elapsed.asSeconds();
 
-	this->object->setPosition(ds+this->object->getPosition() );	
+	this->object->setPosition(ds * 100.0f + this->object->getPosition() );	
 
 #if DEBUG_INFO == 1
 	std::cout << "Object force: (" << this->force.x << "," << this->force.y << ")" << std::endl;
