@@ -4,6 +4,8 @@
 
 #include "Player.hpp"
 #include "Animation.hpp"
+#include "Platform.hpp"
+#include "Physics.hpp"
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
@@ -13,11 +15,16 @@ int main()
 {
 	//Tworzenie okna glownego GUI
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
-	window.setFramerateLimit(60);	//Limit klatek do 60
+	window.setFramerateLimit(120);	//Limit klatek do 60
 
 	Player player = Player(0, 0);	//Stworzenie obiektu gracza na pozycji (10,20)
 	//player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
 	
+	Platform platform = Platform(50, 500, 50, 5, 4);
+
+	Physics physicsPlatform = Physics( &platform, 2 );
+	physicsPlatform.applyGravity();
+
 	Animation animationIdle = Animation(&player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
 	Animation animationRunning = Animation(&player.shape, PLAY_MODE::LOOP);
 	Animation animationJumping = Animation(&player.shape, PLAY_MODE::ONCE);
@@ -67,13 +74,17 @@ int main()
 				if( event.key.code == sf::Keyboard::Space ) {
 					player.jump(); 
 					animationJumping.play();				
+					physicsPlatform.addVelocity( sf::Vector2f(0, -20) );
+				}
+				if( event.key.code == sf::Keyboard::V ) {
+					physicsPlatform.setVelocity(sf::Vector2f(0,-20) );
 				}
 			}
 		}
 
 		window.clear(); //Czyszczenie ramki
 
-		float elapsed = clock.restart().asSeconds();
+		sf::Time elapsed = clock.restart();
 		
 		if( player.isIdling ) {
 			animationIdle.update(elapsed, player.isInverted); //Aktualizacja stanow obiektow w ramce
@@ -85,6 +96,11 @@ int main()
 			animationJumping.update(elapsed, player.isInverted);
 		}
 		player.update();
+
+		platform.update();
+		physicsPlatform.update(elapsed);
+
+		window.draw( platform );
 
 		window.draw( player.shape ); //Rysowanie gracza
 		window.display();	//Ostateczne wyslanie ramki na ekran

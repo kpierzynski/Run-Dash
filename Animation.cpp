@@ -36,10 +36,10 @@ void Animation::stop() {
 	this->isPlaying = false;
 }
 
-void Animation::update( double elapsedTime, bool isInverted ) {
+void Animation::update( sf::Time elapsedTime, bool isInverted ) {
 	if( this->isPlaying != true ) return;
 
-	this->progress += elapsedTime;	//Dodanie do obecnego stanu animacji czasu jaki uplynal od ostatniej klatki
+	this->progress += elapsedTime.asSeconds();	//Dodanie do obecnego stanu animacji czasu jaki uplynal od ostatniej klatki
 	double time = this->progress;	//Zmienna pomocnicza
 
 	for( size_t i = 0; i < this->frames.size(); i++ ) {	//Petla szuka takiego indeksu i, dla ktorego uplyniety czas odpowiada ustalonej klatce

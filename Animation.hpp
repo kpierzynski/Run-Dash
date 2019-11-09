@@ -26,7 +26,7 @@ class Animation {
 		Animation(sf::RectangleShape * shape, PLAY_MODE mode);
 		void addFrame( TFrame frame );
 		void addFrames( TFrame * frames, int length );
-		void update( double elapsedTime, bool isInverted );
+		void update( sf::Time elapsedTime, bool isInverted );
 		void play();
 		void stop();
 };
