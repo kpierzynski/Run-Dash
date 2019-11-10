@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 
 #include <iostream>
 
 #include "Player.hpp"
 #include "Animation.hpp"
-#include "Platform.hpp"
-#include "Physics.hpp"
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
@@ -16,14 +15,10 @@ int main()
 	//Tworzenie okna glownego GUI
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(120);	//Limit klatek do 60
-
-	Player player = Player(0, 0, 50, 37, 4);	//Stworzenie obiektu gracza na pozycji (10,20)
-	//player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
 	
-	Platform platform = Platform(50, 500, 50, 5, 4);
-
-	Physics physicsPlayer = Physics( &player, 60 );
-	physicsPlayer.applyGravity();
+	b2World world = b2World( b2Vec2(0.0f, 10.0f) );
+	
+	Player player = Player(0, 0, 50, 37, 4, 1.0f, 0.2f, &world);	//Stworzenie obiektu gracza na pozycji (10,20)
 
 	Animation animationIdle = Animation(player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
 	Animation animationRunning = Animation(player.shape, PLAY_MODE::LOOP);
@@ -73,7 +68,7 @@ int main()
 			if( event.type == sf::Event::KeyPressed) {
 				if( event.key.code == sf::Keyboard::Space ) {
 					animationJumping.play();				
-					physicsPlayer.setVelocity( sf::Vector2f(0, -6) );
+					std::cout << "Player jumped" << std::endl;
 				}
 			}
 		}
@@ -81,6 +76,7 @@ int main()
 		window.clear(); //Czyszczenie ramki
 
 		sf::Time elapsed = clock.restart();
+		world.Step( elapsed.asSeconds(), 8, 3 ); //argumenty 8, 3 odpowiadaja za dokladnosc symulacji. Sugerowane wartosci przez Box2D to wlasnie 8 i 3
 		
 		if( player.isIdling ) {
 			animationIdle.update(elapsed, player.isInverted); //Aktualizacja stanow obiektow w ramce
@@ -93,11 +89,7 @@ int main()
 		}
 
 		player.update();
-		platform.update();
 
-		physicsPlayer.update(elapsed);
-
-		window.draw( platform );
 		window.draw( player ); //Rysowanie gracza
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}

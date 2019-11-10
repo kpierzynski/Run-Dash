@@ -32,16 +32,16 @@ sf::Vector2f GameObject::getPosition() {
 	return sf::Vector2f( this->x, this->y );
 }
 
-void GameObject::setScale( int scale ) {
-	this->scale = scale;
-}
-
 int GameObject::getScale() {
 	return this->scale;
 }
 
 sf::Vector2i GameObject::getSize() {
 	return sf::Vector2i( this->width, this->height );
+}
+
+sf::Vector2i GameObject::getSpriteSize() {
+	return sf::Vector2i( this->spriteWidth, this->spriteHeight );
 }
 
 void GameObject::move(float dx, float dy) {

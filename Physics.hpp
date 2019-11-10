@@ -2,31 +2,23 @@
 #define PHYSICS_H_
 
 #include <SFML/Graphics.hpp>
-
-#include "GameObject.hpp"
+#include <Box2D/Box2D.h>
 
 class Physics {
 
-	private:
-		GameObject * object;
+	protected:
+		b2BodyDef objectDef;
+		b2PolygonShape objectShape;
+		b2FixtureDef objectFixtureDef;
 
-		sf::Vector2f force;
-		sf::Vector2f acceleration;
-		sf::Vector2f velocity;
-
-		float mass;
-
+		b2Body * object;
 	public:
+		Physics( float x, float y, float width, float heigh, float density, float friction, b2BodyType bodyType, b2World * world );
 
-		Physics( GameObject * object, float mass );
- 
-		void update( sf::Time elapsed );
-		
-		void applyGravity();
+		virtual void update() = 0;
 
-		void addForce( sf::Vector2f force );
-		void addVelocity( sf::Vector2f velocity );
-		void setVelocity( sf::Vector2f velocity );
+
+
 };
 
 

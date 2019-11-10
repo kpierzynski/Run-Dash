@@ -7,9 +7,7 @@ class GameObject : public sf::Drawable {
 	
 	protected:
 		float x,y;
-	
 	public:
-
 		GameObject( float x, float y, int spriteWidth, int spriteHeight, int scale );
 		sf::Shape * shape;
 		
@@ -24,9 +22,9 @@ class GameObject : public sf::Drawable {
 		sf::Vector2f getPosition();
 
 		sf::Vector2i getSize();
+		sf::Vector2i getSpriteSize();
 
 		int getScale();
-		void setScale( int scale );
 
 		void move( float dx, float dy );
 		void move( sf::Vector2f dPosition );

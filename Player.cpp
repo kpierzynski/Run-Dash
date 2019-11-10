@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 
-Player::Player( float x, float y, int spriteWidth, int spriteHeight, int scale ) : GameObject( x, y, spriteWidth, spriteHeight, scale ) {
+Player::Player( float x, float y, int spriteWidth, int spriteHeight, int scale, float density, float friction, b2World * world ) : GameObject( x, y, spriteWidth, spriteHeight, scale ), Physics(x,y,spriteWidth*scale*1.0f, spriteHeight*scale*1.0f, density, friction, b2_dynamicBody, world) {
 
 	if( !this->texture.loadFromFile( "Assets/playerTexture.png" ) ) {
 		std::cout << "ERROR: Player.cpp, Player::Player(...): loading texture " << std::endl;
@@ -33,14 +33,16 @@ void Player::setPosition( float x, float y ) {
 
 void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 
+	b2Vec2 pos = this->object->GetPosition();
+
 	if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) { 
-		this->x -= 8; 
+		this->object->SetTransform(pos+b2Vec2(-10,0), 0);
 		this->isRunning = true;
 		this->isIdling = false;
 		this->isInverted = true;
 	}
 	else if( sf::Keyboard::isKeyPressed(sf::Keyboard::D) ) { 
-		this->x += 8; 
+		this->object->SetTransform(pos+b2Vec2(10,0), 0);
 		this->isRunning = true;
 		this->isIdling = false;
 		this->isInverted = false;
@@ -50,6 +52,6 @@ void Player::update() {	//Funckcja update wywolywana w kazdej ramce
 		this->isRunning = false;
 	}
 
-	this->shape->setPosition( this->x, this->y );	//Aktualizacja pozycji prostokata gracza
+	this->shape->setPosition( pos.x, pos.y );	//Aktualizacja pozycji prostokata gracza
 
 }

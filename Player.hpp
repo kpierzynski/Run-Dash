@@ -4,8 +4,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameObject.hpp"
+#include "Physics.hpp"
 
-class Player : public GameObject {
+class Player : public GameObject, public Physics {
 	private:
 		sf::Texture texture;
 
@@ -18,7 +19,7 @@ class Player : public GameObject {
 		bool isJumping;
 		bool isAttacking;
 
-		Player( float x, float y, int spriteWidth, int spriteHeight, int scale );
+		Player( float x, float y, int spriteWidth, int spriteHeight, int scale, float density, float friction, b2World * world );
 		void setPosition( float x, float y );
 
 		void update() override;
