@@ -5,7 +5,7 @@
 #include "Platform.hpp"
 #include "GameObject.hpp"
 
-Platform::Platform( float x, float y, int spriteWidth, int spriteHeight, int scale ) {
+Platform::Platform( float x, float y, int spriteWidth, int spriteHeight, int scale ) : GameObject( x, y, spriteWidth, spriteHeight, scale ) {
 	
 	this->scale = scale;
 	this->spriteWidth = spriteWidth;

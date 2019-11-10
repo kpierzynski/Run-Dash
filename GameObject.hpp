@@ -10,6 +10,7 @@ class GameObject : public sf::Drawable {
 	
 	public:
 
+		GameObject( float x, float y, int spriteWidth, int spriteHeight, int scale );
 		sf::Shape * shape;
 		
 		int spriteWidth, spriteHeight;

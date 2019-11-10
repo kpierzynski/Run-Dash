@@ -28,6 +28,11 @@ void Physics::update(sf::Time elapsed) {
 
 	this->object->setPosition(ds * 100.0f + this->object->getPosition() );	
 
+	if( this->object->getPosition().y > 600 ) {
+		this->velocity = sf::Vector2f(0,0);
+		this->object->setPosition(this->object->getPosition().x, 600);
+	}
+
 #if DEBUG_INFO == 1
 	std::cout << "Object force: (" << this->force.x << "," << this->force.y << ")" << std::endl;
 	std::cout << "Object velocity: (" << this->velocity.x << "," << this->velocity.y << ")" << std::endl;

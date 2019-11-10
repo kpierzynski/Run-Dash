@@ -18,7 +18,7 @@ class Player : public GameObject {
 		bool isJumping;
 		bool isAttacking;
 
-		Player( float x, float y );
+		Player( float x, float y, int spriteWidth, int spriteHeight, int scale );
 		void setPosition( float x, float y );
 
 		void update() override;

@@ -4,6 +4,20 @@
 
 #include "GameObject.hpp"
 
+GameObject::GameObject( float x, float y, int spriteWidth, int spriteHeight, int scale ) {
+	this->x = x;
+	this->y = y;
+
+	this->spriteWidth = spriteWidth;
+	this->spriteHeight = spriteHeight;
+
+	this->scale = scale;
+
+	this->width = this->spriteWidth * this->scale;
+	this->height = this->spriteHeight * this->scale;
+
+}
+
 void GameObject::setPosition( float x, float y ) {
 	this->x = x;
 	this->y = y;
