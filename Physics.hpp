@@ -19,6 +19,8 @@ class Physics {
 	public:
 
 		Physics( GameObject * object, float mass );
+
+		GameObject * getObject();
  
 		void update( sf::Time elapsed );
 		
@@ -29,5 +31,15 @@ class Physics {
 		void setVelocity( sf::Vector2f velocity );
 };
 
+class PhysicsManager {
+	
+	private:
+		std::vector<Physics *> objects;		
+	public:
+		PhysicsManager();
+		
+		void update();
+		void addObject( Physics * object );
+};
 
 #endif

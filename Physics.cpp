@@ -20,6 +20,10 @@ Physics::Physics( GameObject * object, float mass ) {
 	this->object = object;
 }
 
+GameObject * Physics::getObject() {
+	return this->object;
+}
+
 void Physics::update(sf::Time elapsed) {
 		
 	sf::Vector2f ds = this->velocity*elapsed.asSeconds() + this->acceleration * (elapsed.asSeconds()*elapsed.asSeconds()) * (1.0f/2);
@@ -58,4 +62,16 @@ void Physics::setVelocity(sf::Vector2f velocity) {
 
 void Physics::applyGravity() {
 	this->addForce( sf::Vector2f(0, GRAVITATIONAL_ACCELERATION * this->mass));
+}
+
+
+PhysicsManager::PhysicsManager() {
+	std::cout << "PM constructor" << std::endl;
+}
+
+void PhysicsManager::update() {
+}
+
+void PhysicsManager::addObject(Physics *object) {
+	this->objects.push_back(object);
 }

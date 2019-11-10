@@ -18,38 +18,43 @@ int main()
 	window.setFramerateLimit(120);	//Limit klatek do 60
 
 	Player player = Player(0, 0, 50, 37, 4);	//Stworzenie obiektu gracza na pozycji (10,20)
-	//player.setPosition( 0, SCREEN_HEIGHT-player.spriteHeight*player.scale );
-	
-	Platform platform = Platform(50, 500, 50, 5, 4);
-
 	Physics physicsPlayer = Physics( &player, 60 );
 	physicsPlayer.applyGravity();
+	
+	Platform platform = Platform(50, 500, 50, 5, 4);
+	Physics physicsPlatform = Physics( &platform, 1 );
 
-	Animation animationIdle = Animation(player.shape, PLAY_MODE::LOOP);	//Dodanie animacji do gracza
-	Animation animationRunning = Animation(player.shape, PLAY_MODE::LOOP);
-	Animation animationJumping = Animation(player.shape, PLAY_MODE::ONCE);
+	PhysicsManager pManager = PhysicsManager();
+	pManager.addObject(&physicsPlayer);
+	pManager.addObject(&physicsPlatform);
+
+	Animation animationIdle = Animation(player.getShape(), PLAY_MODE::LOOP);	//Dodanie animacji do gracza
+	Animation animationRunning = Animation(player.getShape(), PLAY_MODE::LOOP);
+	Animation animationJumping = Animation(player.getShape(), PLAY_MODE::ONCE);
+
+	sf::Vector2i size = player.getSpriteSize();
 
 	TFrame framesIdle[4] = {
-		{sf::IntRect(0*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
-		{sf::IntRect(1*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
-		{sf::IntRect(2*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.15f},
-		{sf::IntRect(3*player.spriteWidth,0,player.spriteWidth,player.spriteHeight), 0.2f}
+		{sf::IntRect( 0*size.x, 0, size.x, size.y ), 0.15f},
+		{sf::IntRect( 1*size.x, 0, size.x, size.y ), 0.15f},
+		{sf::IntRect( 2*size.x, 0, size.x, size.y ), 0.15f},
+		{sf::IntRect( 3*size.x, 0, size.x, size.y ), 0.2f}
 	};
 
 	TFrame framesRunning[6] = {	
-		{sf::IntRect(1*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
-		{sf::IntRect(2*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
-		{sf::IntRect(3*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
-		{sf::IntRect(4*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
-		{sf::IntRect(5*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
-		{sf::IntRect(6*player.spriteWidth,1*player.spriteHeight, player.spriteWidth, player.spriteHeight), 0.15f},
+		{sf::IntRect( 1*size.x, 1*size.y, size.x, size.y ), 0.15f},
+		{sf::IntRect( 2*size.x, 1*size.y, size.x, size.y ), 0.15f},
+		{sf::IntRect( 3*size.x, 1*size.y, size.x, size.y ), 0.15f},
+		{sf::IntRect( 4*size.x, 1*size.y, size.x, size.y ), 0.15f},
+		{sf::IntRect( 5*size.x, 1*size.y, size.x, size.y ), 0.15f},
+		{sf::IntRect( 6*size.x, 1*size.y, size.x, size.y ), 0.15f},
 	};
 
 	TFrame framesJumping[4] = {
-		{sf::IntRect(0*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(5.0f/100)},
-		{sf::IntRect(1*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(18.0f/100)},
-		{sf::IntRect(2*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(27.0f/100)},
-		{sf::IntRect(3*player.spriteWidth,2*player.spriteHeight, player.spriteWidth, player.spriteHeight), (1.0f/2)*(50.0f/100)},
+		{sf::IntRect( 0*size.x, 2*size.y, size.x, size.y ), (1.0f/2)*(5.0f/100)},
+		{sf::IntRect( 1*size.x, 2*size.y, size.x, size.y ), (1.0f/2)*(18.0f/100)},
+		{sf::IntRect( 2*size.x, 2*size.y, size.x, size.y ), (1.0f/2)*(27.0f/100)},
+		{sf::IntRect( 3*size.x, 2*size.y, size.x, size.y ), (1.0f/2)*(50.0f/100)},
 	};
 	
 	animationIdle.addFrames(framesIdle, 4);
@@ -59,9 +64,8 @@ int main()
 
 	animationIdle.play();
 	animationRunning.play();
-	animationJumping.play();
 
-	sf::Clock clock;	//Zegar do obslugi animacji
+	sf::Clock clock;	//Zegar do obslugi animacji i fizyki
 	
 	while (window.isOpen())	//Petla glowna programu
 	{
@@ -82,20 +86,19 @@ int main()
 
 		sf::Time elapsed = clock.restart();
 		
-		if( player.isIdling ) {
+		if( player.isIdling )
 			animationIdle.update(elapsed, player.isInverted); //Aktualizacja stanow obiektow w ramce
-		}
-		if( player.isRunning ) {
+		if( player.isRunning )
 			animationRunning.update(elapsed, player.isInverted);
-		}
-		if( player.isJumping ) {
+		if( player.isJumping ) 
 			animationJumping.update(elapsed, player.isInverted);
-		}
 
 		player.update();
 		platform.update();
 
 		physicsPlayer.update(elapsed);
+		
+		pManager.update();
 
 		window.draw( platform );
 		window.draw( player ); //Rysowanie gracza

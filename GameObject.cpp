@@ -5,9 +5,6 @@
 #include "GameObject.hpp"
 
 GameObject::GameObject( float x, float y, int spriteWidth, int spriteHeight, int scale ) {
-	this->x = x;
-	this->y = y;
-
 	this->spriteWidth = spriteWidth;
 	this->spriteHeight = spriteHeight;
 
@@ -16,6 +13,12 @@ GameObject::GameObject( float x, float y, int spriteWidth, int spriteHeight, int
 	this->width = this->spriteWidth * this->scale;
 	this->height = this->spriteHeight * this->scale;
 
+	this->x = x;
+	this->y = y;
+}
+
+sf::Shape * GameObject::getShape() {
+	return this->shape;
 }
 
 void GameObject::setPosition( float x, float y ) {
@@ -32,16 +35,16 @@ sf::Vector2f GameObject::getPosition() {
 	return sf::Vector2f( this->x, this->y );
 }
 
-void GameObject::setScale( int scale ) {
-	this->scale = scale;
-}
-
 int GameObject::getScale() {
 	return this->scale;
 }
 
 sf::Vector2i GameObject::getSize() {
 	return sf::Vector2i( this->width, this->height );
+}
+
+sf::Vector2i GameObject::getSpriteSize() {
+	return sf::Vector2i(this->spriteWidth, this->spriteHeight );
 }
 
 void GameObject::move(float dx, float dy) {
