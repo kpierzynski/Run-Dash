@@ -5,6 +5,8 @@
 
 #include "Animation.hpp"
 
+// dupa
+
 Animation::Animation(sf::Shape * shape, PLAY_MODE mode) {
 	this->shape = shape;	//Zapamietanie elementu docelowego do animacji
 	this->length = 0;	//Dlugosc animacji
