@@ -4,4 +4,5 @@
 
 Background::Background(sf::Texture* bgTexture){
 	this->image.setTexture(*bgTexture);
+	this->image.setPosition(0, -350);
 }; 

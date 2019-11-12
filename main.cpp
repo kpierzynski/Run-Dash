@@ -6,8 +6,8 @@
 #include "Animation.hpp"
 #include "Background.hpp"
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 #define GAME_TITLE "Run&Dash"
 
 int main()
