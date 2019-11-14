@@ -1,5 +1,8 @@
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall
 
-main:
-	g++ *.cpp ${CFLAGS} -o $@ ${LIBS}
+main: Objects/*.cpp Objects/*.hpp main.cpp
+	g++ $? ${CFLAGS} -o $@ ${LIBS}
+
+clean:
+	rm -rf ./main
