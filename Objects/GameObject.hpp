@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Component;
-
 template<typename T>
 class GameObject {
 

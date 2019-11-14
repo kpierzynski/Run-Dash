@@ -21,14 +21,14 @@ void GameObject<T>::addComponent(T* component) {
 	this->components.push_back(*component);	
 }
 
-//template<typename T>
-//std::vector<T> GameObject::getComponent() {
-//	std::vector<T> result;
-//	
-//	for(int i = 0; i < this->components.size(); i++) {
-//		if(typeid(T).name() == typeid(result[i]).name())
-//			result.push_back(result[i]);
-//	}
-//
-//	return result;
-//}
+template<typename T>
+std::vector<T> GameObject<T>::getComponent() {
+	std::vector<T> result;
+	
+	for(int i = 0; i < this->components.size(); i++) {
+		if(typeid(T).name() == typeid(result[i]).name())
+			result.push_back(result[i]);
+	}
+
+	return result;
+}

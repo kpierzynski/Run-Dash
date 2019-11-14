@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "Objects/GameObject.hpp"
 #include "Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
@@ -16,7 +16,7 @@ int main() {
 	window.setFramerateLimit(60);	//Limit klatek do 60
 
 	sf::RectangleShape* rec = new sf::RectangleShape(sf::Vector2f(0.0f, 0.0f));
-	GameObject<Component> go = GameObject<Component>(rec, 0.0f, 0.0f);
+	GameObject<Component> go = GameObject<Component>(rec, sf::Vector2f(0.0f, 0.0f));
 	
 	//Uzupelnienie animacji klatkami i ich czasami
 
