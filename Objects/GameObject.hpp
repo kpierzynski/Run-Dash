@@ -4,19 +4,20 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-template<typename T>
+class Component;
+
 class GameObject {
 
 	private:
 		sf::Shape* shape;
-		std::vector<T> components;
+		std::vector<Component*> components;
 	
 	public:
 		GameObject(sf::Shape* shape, sf::Vector2f coords);
 		GameObject(sf::Shape* shape, float x, float y);
 
-		void addComponent(T* component);
-		std::vector<T> getComponent();
+		void addComponent(Component* component);
+		void getComponent(std::string name);
 };
 
 #endif

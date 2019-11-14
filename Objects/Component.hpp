@@ -1,22 +1,21 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
-template<typename T>
 class GameObject;
 
 class Component {
 
 	private:
-		GameObject<Component>* parent;
+		GameObject* parent;
 	
 	public:
 		virtual void update() = 0;
-		Component(GameObject<Component>* parent);
+		Component(GameObject* parent);
 };
 
 class TestCmp: public Component {
 	public:
-		TestCmp(GameObject<Component>* parent);
+		TestCmp(GameObject* parent);
 		void update() override;
 };
 
