@@ -21,7 +21,7 @@ int main() {
 
 	TestCmp testCmp = TestCmp(&testGO);
 	testGO.addComponent(&testCmp);
-	testGO.getComponent("TestCmp");
+	testGO.getComponent<TestCmp>();
 	
 	//Uzupelnienie animacji klatkami i ich czasami
 

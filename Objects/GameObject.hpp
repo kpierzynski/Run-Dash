@@ -17,7 +17,21 @@ class GameObject: public sf::Drawable {
 		GameObject(sf::Shape* shape, float x, float y);
 
 		void addComponent(Component* component);
-		void getComponent(std::string name);
+
+		template<class T>
+		std::vector<T*> getComponent() {
+			std::vector<T*> result;
+
+			for(size_t i = 0; i < this->components.size(); i++) {
+				// Dynamic cast sprawdza czy moze zcastowac element na T*,
+				// jezeli tak to mamy szukany obiekt
+				T* isWanted = dynamic_cast<T*>(this->components[i]);
+				if(isWanted)
+					result.push_back(isWanted);
+			}
+			return result;
+		};
+
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
