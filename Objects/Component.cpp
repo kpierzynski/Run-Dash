@@ -6,4 +6,3 @@ Component::Component(GameObject* parent) {
 
 void TestCmp::update() {};
 TestCmp::TestCmp(GameObject* parent): Component(parent) {}
-

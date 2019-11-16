@@ -14,9 +14,14 @@ int main() {
 	//Tworzenie okna glownego GUI
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
+	
+	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
+	TestGO testGO = TestGO(&rec, sf::Vector2f(2.0f, 2.0f));
+	testGO.shape->setFillColor(sf::Color::Magenta);
 
-	sf::RectangleShape* rec = new sf::RectangleShape(sf::Vector2f(0.0f, 0.0f));
-	GameObject go = GameObject(rec, sf::Vector2f(0.0f, 0.0f));
+	TestCmp testCmp = TestCmp(&testGO);
+	testGO.addComponent(&testCmp);
+	testGO.getComponent("TestCmp");
 	
 	//Uzupelnienie animacji klatkami i ich czasami
 
@@ -31,7 +36,10 @@ int main() {
 				window.close();
 		}
 
+
 		window.clear(); //Czyszczenie ramki
+
+		window.draw(testGO);
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}
 
