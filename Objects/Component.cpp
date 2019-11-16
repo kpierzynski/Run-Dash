@@ -1,9 +1,9 @@
 #include "./Component.hpp"
 
-Component::Component(GameObject<Component>* parent) {
+Component::Component(GameObject* parent) {
 	this->parent = parent;
 }
 
 void TestCmp::update() {};
-TestCmp::TestCmp(GameObject<Component>* parent): Component(parent) {}
+TestCmp::TestCmp(GameObject* parent): Component(parent) {}
 
