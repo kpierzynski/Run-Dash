@@ -1,3 +1,8 @@
-main: main.cpp Player.hpp Player.cpp Animation.hpp Animation.cpp
-	g++ main.cpp Player.cpp Animation.cpp -Wall -Werror -o main -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+CFLAGS = -Wall
 
+main: main.cpp Objects/*.cpp Objects/*.hpp
+	g++ $? ${CFLAGS} -o $@ ${LIBS}
+
+clean:
+	rm -rf ./main
