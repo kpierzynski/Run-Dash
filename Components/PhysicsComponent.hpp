@@ -9,7 +9,7 @@ class PhysicsComponent : public Component {
 	private:
 		b2Body * body;
 	public:
-		PhysicsComponent( GameObject * parent, b2BodyType bodyType, float density, float friction, b2PolygonShape * shape, b2World * world );
+		PhysicsComponent( GameObject * parent, b2BodyType bodyType, float density, float friction, b2World * world );
 		void update();
 
 };

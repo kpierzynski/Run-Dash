@@ -11,8 +11,19 @@
 #define SCREEN_HEIGHT 768
 #define GAME_TITLE "Run&Dash"
 
+#define PIXELS2METERS 0.02f //Przeniesc to stad w pizdu do jednego pliku..
+#define METERS2PIXELS 50.0f //@up
 
 int main() {
+
+	b2World world = b2World( b2Vec2(0.0f, 10.0f) );
+
+	b2BodyDef groundDef;
+	groundDef.position.Set(0.0f*PIXELS2METERS, 400.0f*PIXELS2METERS);
+	b2Body * ground = world.CreateBody(&groundDef);
+	b2PolygonShape groundShape;
+	groundShape.SetAsBox(1000.0f/2*PIXELS2METERS, 5.0f/2*PIXELS2METERS);
+	ground->CreateFixture(&groundShape, 1.0f);
 
 	//Tworzenie okna glownego GUI
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
@@ -22,12 +33,7 @@ int main() {
 	TestGO testGO = TestGO(&rec, sf::Vector2f(2.0f, 2.0f));
 	testGO.shape->setFillColor(sf::Color::Cyan);
 
-	b2PolygonShape sh;
-	sh.SetAsBox(50.0f, 50.0f);
-	
-	b2World world = b2World( b2Vec2(0.0f, 10.0f) );
-
-	PhysicsComponent * phComp = new PhysicsComponent(&testGO, b2_dynamicBody, 1.0f, 0.1f, &sh, &world );
+	PhysicsComponent * phComp = new PhysicsComponent(&testGO, b2_dynamicBody, 1.0f, 0.1f, &world );
 	testGO.addComponent( phComp );
 
 	
