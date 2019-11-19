@@ -4,6 +4,7 @@
 
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
+#include "Objects/Physics.hpp"
 
 #include "Components/PhysicsComponent.hpp"
 
@@ -16,27 +17,24 @@
 
 int main() {
 
-	b2World world = b2World( b2Vec2(0.0f, 10.0f) );
-
-	b2BodyDef groundDef;
-	groundDef.position.Set(0.0f*PIXELS2METERS, 400.0f*PIXELS2METERS);
-	b2Body * ground = world.CreateBody(&groundDef);
-	b2PolygonShape groundShape;
-	groundShape.SetAsBox(1000.0f/2*PIXELS2METERS, 5.0f/2*PIXELS2METERS);
-	ground->CreateFixture(&groundShape, 1.0f);
+	Physics physics = Physics();
 
 	//Tworzenie okna glownego GUI
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 	
 	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
-	TestGO testGO = TestGO(&rec, sf::Vector2f(2.0f, 2.0f));
+	GameObject testGO = GameObject(&rec, sf::Vector2f(2.0f, 2.0f));
 	testGO.shape->setFillColor(sf::Color::Cyan);
-
-	PhysicsComponent * phComp = new PhysicsComponent(&testGO, b2_dynamicBody, 1.0f, 0.1f, &world );
+	PhysicsComponent * phComp = new PhysicsComponent(&testGO, PhysicsComponent::dynamicBody, 1.0f, 0.1f, &physics);
 	testGO.addComponent( phComp );
 
 	
+	sf::RectangleShape rec1 = sf::RectangleShape(sf::Vector2f(500.0f, 5.0f));
+	GameObject testGO1 = GameObject(&rec1, sf::Vector2f(400.0f, 400.0f));
+	testGO1.shape->setFillColor(sf::Color::Red);	
+	PhysicsComponent * phComp1 = new PhysicsComponent(&testGO1, PhysicsComponent::staticBody, 1.0f, 0.1f, &physics );
+	testGO1.addComponent( phComp1 );
 	//Uzupelnienie animacji klatkami i ich czasami
 
 	sf::Clock clock;	//Zegar do obslugi animacji
@@ -44,7 +42,7 @@ int main() {
 	while (window.isOpen())	//Petla glowna programu
 	{
 		sf::Time elapsed = clock.restart();
-		world.Step(elapsed.asSeconds(), 8,3 );
+		physics.update(elapsed);
 		sf::Event event; //Polling eventow
 		while (window.pollEvent(event))
 		{
@@ -56,7 +54,9 @@ int main() {
 		window.clear(); //Czyszczenie ramki
 
 		testGO.update();
+		testGO1.update();
 		window.draw(testGO);
+		window.draw(testGO1);
 
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}

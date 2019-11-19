@@ -6,6 +6,9 @@
 #include "./GameObject.hpp"
 #include "Component.hpp"
 
+#define PIXELS2METERS 0.02f //Przeniesc to stad w pizdu do jednego pliku..
+#define METERS2PIXELS 50.0f //@up
+
 GameObject::GameObject(sf::Shape* shape, sf::Vector2f coords) {
 	this->shape = shape;
 	this->shape->setPosition(coords);
@@ -47,4 +50,3 @@ void GameObject::setPosition(sf::Vector2f pos) {
 	this->shape->setPosition(pos);
 }
 
-TestGO::TestGO(sf::Shape* shape, sf::Vector2f coords): GameObject(shape, coords) {}

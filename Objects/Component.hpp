@@ -13,11 +13,5 @@ class Component {
 		Component(GameObject* parent);
 };
 
-class TestCmp: public Component {
-	public:
-		TestCmp(GameObject* parent);
-		void update() override;
-};
-
 
 #endif

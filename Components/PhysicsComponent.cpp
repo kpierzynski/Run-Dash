@@ -5,20 +5,20 @@
 #include "PhysicsComponent.hpp"
 #include "../Objects/GameObject.hpp"
 #include "../Objects/Component.hpp"
+#include "../Objects/Physics.hpp"
 
 #define PIXELS2METERS 0.02f
 #define METERS2PIXELS 50.0f
 
-PhysicsComponent::PhysicsComponent( GameObject * parent, b2BodyType bodyType, float density, float friction, b2World * world ) : Component(parent) {
+PhysicsComponent::PhysicsComponent( GameObject * parent, BodyType bodyType, float density, float friction, Physics * world ) : Component(parent) {
+	
 	b2PolygonShape shape;
 	
 	b2BodyDef bodyDef;
-	bodyDef.type = bodyType;
-	bodyDef.position.Set( parent->shape->getPosition().x, parent->shape->getPosition().y );
+	bodyDef.type = (b2BodyType)bodyType;
+	bodyDef.position.Set( parent->shape->getPosition().x*PIXELS2METERS, parent->shape->getPosition().y*PIXELS2METERS );
 
 	this->body = world->CreateBody(&bodyDef);
-
-
 
 	size_t points = this->parent->shape->getPointCount();
 	b2Vec2 * vertices = new b2Vec2[points];
@@ -26,7 +26,6 @@ PhysicsComponent::PhysicsComponent( GameObject * parent, b2BodyType bodyType, fl
 		sf::Vector2f pos = this->parent->shape->getPoint(i);
 		vertices[i] = b2Vec2(pos.x*PIXELS2METERS,pos.y*PIXELS2METERS);
 	}
-	for( size_t i = 0; i < points; i++ ) std::cout << "( " << vertices[i].x << ", " << vertices[i].y << " )" << std::endl;
 
 	shape.Set(vertices, points);
 
