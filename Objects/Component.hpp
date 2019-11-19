@@ -5,7 +5,7 @@ class GameObject;
 
 class Component {
 
-	private:
+	protected:
 		GameObject* parent;
 	
 	public:

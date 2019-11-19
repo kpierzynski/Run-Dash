@@ -1,7 +1,7 @@
-LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lBox2D
 CFLAGS = -Wall
 
-main: main.cpp Objects/*.cpp Objects/*.hpp
+main: main.cpp Objects/*.cpp Objects/*.hpp Components/*.cpp Components/*.hpp
 	g++ $? ${CFLAGS} -o $@ ${LIBS}
 
 clean:

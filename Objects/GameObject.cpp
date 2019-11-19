@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include "./GameObject.hpp"
+#include "Component.hpp"
 
 GameObject::GameObject(sf::Shape* shape, sf::Vector2f coords) {
 	this->shape = shape;
@@ -28,6 +29,22 @@ void GameObject::addComponent(Component* component) {
 
 void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->shape);
+}
+
+void GameObject::update() {
+	for( size_t i = 0; i < this->components.size(); i++ ) this->components[i]->update();
+}
+
+sf::Vector2f GameObject::getPosition() {
+	return this->shape->getPosition();
+}
+
+void GameObject::setPosition(float x, float y) {
+	this->setPosition( sf::Vector2f(x,y) );
+}
+
+void GameObject::setPosition(sf::Vector2f pos) {
+	this->shape->setPosition(pos);
 }
 
 TestGO::TestGO(sf::Shape* shape, sf::Vector2f coords): GameObject(shape, coords) {}

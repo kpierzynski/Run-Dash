@@ -1,0 +1,9 @@
+LIBS=-lsfml-graphics -lsfml-window -lsfml-system -lBox2D
+CFLAGS=-Wall
+CC=g++
+
+main: main.cpp Objects/*.cpp Objects/*.hpp
+	g++ $? ${CFLAGS} -o $@ ${LIBS}
+
+clean:
+	rm -rf ./main
