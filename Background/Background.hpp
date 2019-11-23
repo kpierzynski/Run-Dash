@@ -3,11 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-class Background {
-	public:
-		Background(sf::Texture* bgTexture);
-		sf::Sprite image;
-};
+#include "../Objects/GameObject.hpp"
 
+class Background: public GameObject {
+	public:
+		Background(sf::Shape* shape, sf::Texture* bgTexture); 
+
+};
 
 #endif

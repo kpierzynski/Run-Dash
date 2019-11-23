@@ -13,11 +13,16 @@
 int main() {
 
 	//Tworzenie okna glownego GUI
-	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
+	sf::RenderWindow window(
+			sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
+			GAME_TITLE
+	);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 	
 	// Testowe obiekty=========
-	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
+	sf::RectangleShape rec = sf::RectangleShape(
+			sf::Vector2f(50.0f, 50.0f)
+	);
 	TestGO testGO = TestGO(&rec, sf::Vector2f(2.0f, 2.0f));
 	testGO.shape->setFillColor(sf::Color::Magenta);
 
@@ -25,13 +30,18 @@ int main() {
 	testGO.addComponent(&testCmp);
 	testGO.getComponent<TestCmp>();
 	// ==============================
-	//
+	
+	
 	// Załadowanie tła
 	sf::Texture bgTexture;
+	sf::RectangleShape bgShape = sf::RectangleShape(
+			sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT)
+	);
+
 	if(!bgTexture.loadFromFile("Assets/background.jpg")) {
 		return -1;
 	}
-	Background background = Background(&bgTexture);
+	Background background = Background(&bgShape, &bgTexture);
 	
 	//Uzupelnienie animacji klatkami i ich czasami
 
@@ -48,7 +58,7 @@ int main() {
 
 
 		window.clear(); //Czyszczenie ramki
-		window.draw(background.image); // Rysowanie tła
+		window.draw(background); // Rysowanie tła
 		window.draw(testGO); // Rysowanie testowego obiektu
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}
