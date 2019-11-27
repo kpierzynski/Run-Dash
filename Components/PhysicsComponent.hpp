@@ -15,7 +15,6 @@ class PhysicsComponent : public Component {
 	public:
 		enum BodyType { dynamicBody = b2_dynamicBody, staticBody = b2_staticBody };
 
-		//PhysicsComponent( GameObject * parent, b2BodyType bodyType, float density, float friction, Physics * world );
 		PhysicsComponent( GameObject * parent, BodyType bodyType, float density, float friction, Physics * world );
 		void update();
 

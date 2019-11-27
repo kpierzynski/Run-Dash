@@ -7,9 +7,6 @@
 #include "../Objects/Component.hpp"
 #include "../Objects/Physics.hpp"
 
-#define PIXELS2METERS 0.02f
-#define METERS2PIXELS 50.0f
-
 PhysicsComponent::PhysicsComponent( GameObject * parent, BodyType bodyType, float density, float friction, Physics * world ) : Component(parent) {
 	
 	b2PolygonShape shape;
