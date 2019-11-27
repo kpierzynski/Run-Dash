@@ -32,16 +32,10 @@ int main() {
 	// ==============================
 	
 	
-	// Załadowanie tła
-	sf::Texture bgTexture;
 	sf::RectangleShape bgShape = sf::RectangleShape(
 			sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT)
 	);
-
-	if(!bgTexture.loadFromFile("Assets/background.jpg")) {
-		return -1;
-	}
-	Background background = Background(&bgShape, &bgTexture);
+	Background background = Background("Assets/background.jpg", &bgShape);
 	
 	//Uzupelnienie animacji klatkami i ich czasami
 

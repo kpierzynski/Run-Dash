@@ -2,13 +2,16 @@
 #define BACKGROUND_H_
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "../Objects/GameObject.hpp"
 
 class Background: public GameObject {
-	public:
-		Background(sf::Shape* shape, sf::Texture* bgTexture); 
+	private:
+		sf::Texture bgTexture;
 
+	public:
+		Background(std::string filename, sf::Shape* shape);
 };
 
 #endif
