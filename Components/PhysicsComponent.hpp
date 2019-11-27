@@ -16,8 +16,10 @@ class PhysicsComponent : public Component {
 		enum BodyType { dynamicBody = b2_dynamicBody, staticBody = b2_staticBody };
 
 		PhysicsComponent( GameObject * parent, BodyType bodyType, float density, float friction, Physics * world );
-		void update();
+		void update( sf::Time elapsed );
 
+		void move( b2Vec2 dPos );
+		void setVelocity( b2Vec2 vel );
 };
 
 #endif

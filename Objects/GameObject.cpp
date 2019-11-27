@@ -31,8 +31,8 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*this->shape);
 }
 
-void GameObject::update() {
-	for( size_t i = 0; i < this->components.size(); i++ ) this->components[i]->update();
+void GameObject::update( sf::Time elapsed ) {
+	for( size_t i = 0; i < this->components.size(); i++ ) this->components[i]->update( elapsed );
 }
 
 sf::Vector2f GameObject::getPosition() {
