@@ -12,9 +12,6 @@
 #define SCREEN_HEIGHT 768
 #define GAME_TITLE "Run&Dash"
 
-#define PIXELS2METERS 0.02f //Przeniesc to stad w pizdu do jednego pliku..
-#define METERS2PIXELS 50.0f //@up
-
 int main() {
 
 	Physics physics = Physics();
