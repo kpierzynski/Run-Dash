@@ -1,48 +1,58 @@
 #include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 #include <iostream>
+#include <cstdint>
 
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
 #include "Background/Background.hpp"
+#include "Objects/Physics.hpp"
+#include "Components/PhysicsComponent.hpp"
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
 #define GAME_TITLE "Run&Dash"
-
 
 int main() {
 
+	Physics physics = Physics();
+
 	//Tworzenie okna glownego GUI
+	const std::vector<sf::VideoMode> fullscreenModes = sf::VideoMode::getFullscreenModes();
+	uint32_t screen_width = fullscreenModes[0].width;
+	uint32_t screen_height = fullscreenModes[0].height;
+	
 	sf::RenderWindow window(
-			sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
-			GAME_TITLE
+			sf::VideoMode(screen_width, screen_height),
+			GAME_TITLE,
+			sf::Style::Fullscreen
 	);
+
 	window.setFramerateLimit(60);	//Limit klatek do 60
 	
-	// Testowe obiekty=========
-	sf::RectangleShape rec = sf::RectangleShape(
-			sf::Vector2f(50.0f, 50.0f)
-	);
-	TestGO testGO = TestGO(&rec, sf::Vector2f(2.0f, 2.0f));
-	testGO.shape->setFillColor(sf::Color::Magenta);
-
-	TestCmp testCmp = TestCmp(&testGO);
-	testGO.addComponent(&testCmp);
-	testGO.getComponent<TestCmp>();
-	// ==============================
-	
-	
 	sf::RectangleShape bgShape = sf::RectangleShape(
-			sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT)
+			sf::Vector2f(screen_width, screen_height - 420)
 	);
 	Background background = Background("Assets/background.jpg", &bgShape);
+
+	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
+	GameObject testGO = GameObject(&rec, sf::Vector2f(2.0f, 2.0f));
+	testGO.shape->setFillColor(sf::Color::Cyan);
+	PhysicsComponent * phComp = new PhysicsComponent(&testGO, PhysicsComponent::dynamicBody, 1.0f, 0.1f, &physics);
+	testGO.addComponent( phComp );
+
 	
+	sf::RectangleShape rec1 = sf::RectangleShape(sf::Vector2f(500.0f, 5.0f));
+	GameObject testGO1 = GameObject(&rec1, sf::Vector2f(400.0f, 400.0f));
+	testGO1.shape->setFillColor(sf::Color::Red);	
+	PhysicsComponent * phComp1 = new PhysicsComponent(&testGO1, PhysicsComponent::staticBody, 1.0f, 0.1f, &physics );
+	testGO1.addComponent( phComp1 );
 	//Uzupelnienie animacji klatkami i ich czasami
 
 	sf::Clock clock;	//Zegar do obslugi animacji
 
 	while (window.isOpen())	//Petla glowna programu
 	{
+		sf::Time elapsed = clock.restart();
+		physics.update(elapsed);
 		sf::Event event; //Polling eventow
 		while (window.pollEvent(event))
 		{
@@ -54,6 +64,12 @@ int main() {
 		window.clear(); //Czyszczenie ramki
 		window.draw(background); // Rysowanie tła
 		window.draw(testGO); // Rysowanie testowego obiektu
+
+		testGO.update();
+		testGO1.update();
+		window.draw(testGO);
+		window.draw(testGO1);
+
 		window.display();	//Ostateczne wyslanie ramki na ekran
 	}
 

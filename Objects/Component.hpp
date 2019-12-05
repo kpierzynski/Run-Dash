@@ -5,18 +5,12 @@ class GameObject;
 
 class Component {
 
-	private:
+	protected:
 		GameObject* parent;
 	
 	public:
 		virtual void update() = 0;
 		Component(GameObject* parent);
-};
-
-class TestCmp: public Component {
-	public:
-		TestCmp(GameObject* parent);
-		void update() override;
 };
 
 

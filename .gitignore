@@ -1,2 +1,4 @@
 main
 .ccls-cache
+*.bak
+*.o

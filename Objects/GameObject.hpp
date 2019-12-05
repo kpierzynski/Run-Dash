@@ -18,8 +18,7 @@ class GameObject: public sf::Drawable {
 
 		void addComponent(Component* component);
 
-		template<class T>
-		std::vector<T*> getComponent() {
+		template<class T> std::vector<T*> getComponent() {
 			std::vector<T*> result;
 
 			for(size_t i = 0; i < this->components.size(); i++) {
@@ -31,13 +30,14 @@ class GameObject: public sf::Drawable {
 			}
 			return result;
 		};
+		sf::Vector2f getPosition();
+		void setPosition( sf::Vector2f pos );
+		void setPosition( float x, float y);
+
+		void update();
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
-class TestGO: public GameObject {
-	public:
-		TestGO(sf::Shape* shape, sf::Vector2f coords);
-};
 
 #endif

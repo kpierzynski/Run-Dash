@@ -15,6 +15,6 @@ Background::Background(
 	if(!this->bgTexture.loadFromFile(filename)) {
 		throw std::invalid_argument("Wrong background image path");
 	}
-
+	
 	this->shape->setTexture(&this->bgTexture);
 }
