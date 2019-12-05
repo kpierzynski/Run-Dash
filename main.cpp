@@ -1,15 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include <cstdint>
 
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
+#include "Background/Background.hpp"
 #include "Objects/Physics.hpp"
-
 #include "Components/PhysicsComponent.hpp"
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
 #define GAME_TITLE "Run&Dash"
 
 int main() {
@@ -17,9 +16,23 @@ int main() {
 	Physics physics = Physics();
 
 	//Tworzenie okna glownego GUI
-	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
+	const std::vector<sf::VideoMode> fullscreenModes = sf::VideoMode::getFullscreenModes();
+	uint32_t screen_width = fullscreenModes[0].width;
+	uint32_t screen_height = fullscreenModes[0].height;
+	
+	sf::RenderWindow window(
+			sf::VideoMode(screen_width, screen_height),
+			GAME_TITLE,
+			sf::Style::Fullscreen
+	);
+
 	window.setFramerateLimit(60);	//Limit klatek do 60
 	
+	sf::RectangleShape bgShape = sf::RectangleShape(
+			sf::Vector2f(screen_width, screen_height - 420)
+	);
+	Background background = Background("Assets/background.jpg", &bgShape);
+
 	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
 	GameObject testGO = GameObject(&rec, sf::Vector2f(2.0f, 2.0f));
 	testGO.shape->setFillColor(sf::Color::Cyan);
@@ -49,6 +62,8 @@ int main() {
 
 
 		window.clear(); //Czyszczenie ramki
+		window.draw(background); // Rysowanie tła
+		window.draw(testGO); // Rysowanie testowego obiektu
 
 		testGO.update();
 		testGO1.update();

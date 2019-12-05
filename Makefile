@@ -1,3 +1,5 @@
+.PHONY: clean
+
 CC = gcc
 CLIBS := -lsfml-graphics -lsfml-window -lsfml-system -lBox2D -lstdc++
 CFLAGS := -Wall
@@ -5,9 +7,11 @@ CFLAGS := -Wall
 SRCS = $(wildcard *.cpp)
 SRCS += $(wildcard Objects/*.cpp)
 SRCS += $(wildcard Components/*.cpp)
+SRCS += $(wildcard Background/*.cpp)
 
 HDRS = $(wildcard Objects/*.hpp)
 HDRS += $(wildcard Components/*.hpp)
+HDRS += $(wildcard Background/*.hpp)
 
 OBJS = $(SRCS:%.cpp=%.o)
 
@@ -20,9 +24,6 @@ main: $(OBJS)
 	
 %.o: %.hpp
 	$(CC) -c $< -o $@ 
-
-
-.PHONY: clean
 
 clean:
 	rm -rf ./main
