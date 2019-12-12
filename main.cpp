@@ -8,7 +8,6 @@
 
 #include "Components/PhysicsComponent.hpp"
 #include "Components/AnimationComponent.hpp"
-//#include "Components/PlayerComponent.hpp"
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
@@ -33,10 +32,10 @@ int main() {
 
 	std::tuple<sf::IntRect, float> frames[4] = {
 		
-		std::make_tuple(sf::IntRect(0,0,50,37), 0.5f),
-		std::make_tuple(sf::IntRect(50,0,50,37), 0.5f),
-		std::make_tuple(sf::IntRect(100,0,50,37), 0.5f),
-		std::make_tuple(sf::IntRect(150,0,50,37), 0.5f)
+		std::make_tuple(sf::IntRect(0,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(50,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(100,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(150,0,50,37), 0.2f)
 	
 	};
 	AnimationComponent * anComp = new AnimationComponent(&testGO, AnimationComponent::PlayMode::LOOP, frames, 4 );

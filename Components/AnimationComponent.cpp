@@ -7,7 +7,11 @@
 #include "../Objects/GameObject.hpp"
 #include "../Objects/Component.hpp"
 
-AnimationComponent::AnimationComponent( GameObject * parent, AnimationComponent::PlayMode playMode, std::tuple<sf::IntRect, float> * frames, size_t size ) : Component( parent ) {
+AnimationComponent::AnimationComponent( GameObject * parent, 
+					AnimationComponent::PlayMode playMode, 
+					std::tuple<sf::IntRect, float> * frames, 
+					size_t size ) 
+					: Component( parent ) {
 	this->progress = 0;
 	this->isPlaying = false;
 	this->playMode = playMode;
