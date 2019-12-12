@@ -34,8 +34,18 @@ PhysicsComponent::PhysicsComponent( GameObject * parent, BodyType bodyType, floa
 
 }
 
-void PhysicsComponent::update() {
+void PhysicsComponent::update( sf::Time elapsed ) {
 
 	b2Vec2 pos = this->body->GetPosition();
 	this->parent->setPosition(pos.x*METERS2PIXELS,pos.y*METERS2PIXELS);
+
+}
+
+void PhysicsComponent::move(b2Vec2 dPos) {
+	b2Vec2 currentPos = this->body->GetPosition();
+	this->body->SetTransform(currentPos + dPos, this->body->GetAngle());
+}
+
+void PhysicsComponent::setVelocity(b2Vec2 vel) {
+	this->body->SetLinearVelocity(vel);
 }

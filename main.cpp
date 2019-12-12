@@ -7,6 +7,7 @@
 #include "Objects/Physics.hpp"
 
 #include "Components/PhysicsComponent.hpp"
+#include "Components/AnimationComponent.hpp"
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
@@ -20,17 +21,34 @@ int main() {
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE);
 	window.setFramerateLimit(60);	//Limit klatek do 60
 	
-	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
+	sf::RectangleShape rec = sf::RectangleShape(sf::Vector2f(50.0f*4, 37.0f*4));
 	GameObject testGO = GameObject(&rec, sf::Vector2f(2.0f, 2.0f));
-	testGO.shape->setFillColor(sf::Color::Cyan);
+	sf::Texture texture;
+	texture.loadFromFile("./Assets/playerTexture.png");
+	testGO.shape->setTexture(&texture);
+	testGO.shape->setTextureRect( sf::IntRect(0,0,50,37) );
 	PhysicsComponent * phComp = new PhysicsComponent(&testGO, PhysicsComponent::dynamicBody, 1.0f, 0.1f, &physics);
 	testGO.addComponent( phComp );
 
+	std::tuple<sf::IntRect, float> frames[4] = {
+		
+		std::make_tuple(sf::IntRect(0,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(50,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(100,0,50,37), 0.2f),
+		std::make_tuple(sf::IntRect(150,0,50,37), 0.2f)
 	
-	sf::RectangleShape rec1 = sf::RectangleShape(sf::Vector2f(500.0f, 5.0f));
-	GameObject testGO1 = GameObject(&rec1, sf::Vector2f(400.0f, 400.0f));
+	};
+	AnimationComponent * anComp = new AnimationComponent(&testGO, AnimationComponent::PlayMode::LOOP, frames, 4 );
+	anComp->play();
+	testGO.addComponent( anComp );
+
+	//PlayerComponent * plComp = new PlayerComponent( &testGO );
+	//testGO.addComponent( plComp );
+
+	sf::RectangleShape rec1 = sf::RectangleShape(sf::Vector2f(500.0f, 50.0f));
+	GameObject testGO1 = GameObject(&rec1, sf::Vector2f(0.0f, 400.0f));
 	testGO1.shape->setFillColor(sf::Color::Red);	
-	PhysicsComponent * phComp1 = new PhysicsComponent(&testGO1, PhysicsComponent::staticBody, 1.0f, 0.1f, &physics );
+	PhysicsComponent * phComp1 = new PhysicsComponent(&testGO1, PhysicsComponent::staticBody, 1.0f, 0.9f, &physics );
 	testGO1.addComponent( phComp1 );
 	//Uzupelnienie animacji klatkami i ich czasami
 
@@ -47,11 +65,10 @@ int main() {
 				window.close();
 		}
 
-
 		window.clear(); //Czyszczenie ramki
 
-		testGO.update();
-		testGO1.update();
+		testGO.update(elapsed);
+		testGO1.update(elapsed);
 		window.draw(testGO);
 		window.draw(testGO1);
 

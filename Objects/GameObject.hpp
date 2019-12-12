@@ -34,7 +34,7 @@ class GameObject: public sf::Drawable {
 		void setPosition( sf::Vector2f pos );
 		void setPosition( float x, float y);
 
-		void update();
+		void update( sf::Time elapsed );
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
